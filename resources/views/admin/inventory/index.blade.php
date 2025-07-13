@@ -23,6 +23,7 @@
                                 <th class="p-2">Stock</th>
                                 <th class="p-2">Reorder Level</th>
                                 <th class="p-2">Barcode</th>
+                                <th class="p-2">Barcode Image</th>
                                 <th class="p-2">Actions</th>
                             </tr>
                         </thead>
@@ -36,6 +37,8 @@
                                     <td class="p-2">{{ $product->quantity_in_stock }}</td>
                                     <td class="p-2">{{ $product->reorder_level }}</td>
                                     <td class="p-2">{{ $product->barcode ?? 'N/A' }}</td>
+                                    <td class="p-2">
+<img src="{{ route('admin.inventory.barcode', $product) }}" alt="Barcode" class="h-10" />                                    </td>
                                     <td class="p-2">
                                         <a href="{{ route('admin.inventory.edit', $product) }}" class="text-blue-500 hover:underline">Edit</a>
                                         <form action="{{ route('admin.inventory.destroy', $product) }}" method="POST" class="inline">

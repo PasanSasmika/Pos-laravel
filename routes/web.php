@@ -28,6 +28,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/inventory/{product}/edit', [InventoryController::class, 'edit'])->name('admin.inventory.edit');
     Route::put('/inventory/{product}', [InventoryController::class, 'update'])->name('admin.inventory.update');
     Route::delete('/inventory/{product}', [InventoryController::class, 'destroy'])->name('admin.inventory.destroy');
+    Route::get('/inventory/{product}/barcode', [InventoryController::class, 'barcode'])->name('admin.inventory.barcode');
 });
 
 Route::middleware(['auth', 'role:manag'])->group(function () {

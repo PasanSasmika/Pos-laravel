@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Edit Product
         </h2>
     </x-slot>
@@ -9,43 +9,39 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form action="{{ route('admin.inventory.update', $product) }}" method="POST">
+                    <form method="POST" action="{{ route('admin.inventory.update', $product) }}">
                         @csrf
                         @method('PUT')
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium">Product Name</label>
-                            <input type="text" name="name" id="name" value="{{ $product->name }}" class="mt-1 block w-full border-gray-300 rounded-md" required>
-                            @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium">Name</label>
+                            <input type="text" name="name" value="{{ $product->name }}" class="w-full border rounded p-2" required />
                         </div>
                         <div class="mb-4">
-                            <label for="category" class="block text-sm font-medium">Category</label>
-                            <input type="text" name="category" id="category" value="{{ $product->category }}" class="mt-1 block w-full border-gray-300 rounded-md" required>
-                            @error('category') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium">Category</label>
+                            <input type="text" name="category" value="{{ $product->category }}" class="w-full border rounded p-2" required />
                         </div>
                         <div class="mb-4">
-                            <label for="buying_price" class="block text-sm font-medium">Buying Price</label>
-                            <input type="number" name="buying_price" id="buying_price" step="0.01" value="{{ $product->buying_price }}" class="mt-1 block w-full border-gray-300 rounded-md" required>
-                            @error('buying_price') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium">Buying Price</label>
+                            <input type="number" name="buying_price" value="{{ $product->buying_price }}" step="0.01" class="w-full border rounded p-2" required />
                         </div>
                         <div class="mb-4">
-                            <label for="selling_price" class="block text-sm font-medium">Selling Price</label>
-                            <input type="number" name="selling_price" id="selling_price" step="0.01" value="{{ $product->selling_price }}" class="mt-1 block w-full border-gray-300 rounded-md" required>
-                            @error('selling_price') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium">Selling Price</label>
+                            <input type="number" name="selling_price" value="{{ $product->selling_price }}" step="0.01" class="w-full border rounded p-2" required />
                         </div>
                         <div class="mb-4">
-                            <label for="quantity_in_stock" class="block text-sm font-medium">Quantity in Stock</label>
-                            <input type="number" name="quantity_in_stock" id="quantity_in_stock" value="{{ $product->quantity_in_stock }}" class="mt-1 block w-full border-gray-300 rounded-md" required>
-                            @error('quantity_in_stock') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium">Quantity in Stock</label>
+                            <input type="number" name="quantity_in_stock" value="{{ $product->quantity_in_stock }}" class="w-full border rounded p-2" required />
                         </div>
                         <div class="mb-4">
-                            <label for="reorder_level" class="block text-sm font-medium">Reorder Level</label>
-                            <input type="number" name="reorder_level" id="reorder_level" value="{{ $product->reorder_level }}" class="mt-1 block w-full border-gray-300 rounded-md" required>
-                            @error('reorder_level') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium">Reorder Level</label>
+                            <input type="number" name="reorder_level" value="{{ $product->reorder_level }}" class="w-full border rounded p-2" required />
                         </div>
                         <div class="mb-4">
-                            <label for="barcode" class="block text-sm font-medium">Barcode (Optional)</label>
-                            <input type="text" name="barcode" id="barcode" value="{{ $product->barcode }}" class="mt-1 block w-full border-gray-300 rounded-md">
-                            @error('barcode') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            <label class="block text-sm font-medium">Barcode</label>
+                            <input type="text" name="barcode" value="{{ $product->barcode }}" class="w-full border rounded p-2" />
+                            @if ($product->barcode)
+                                <img src="{{ route('admin.inventory.barcode', $product) }}" alt="Barcode" class="mt-2 h-10" />
+                            @endif
                         </div>
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update Product</button>
                     </form>

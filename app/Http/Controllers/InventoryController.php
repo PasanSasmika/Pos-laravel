@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class InventoryController extends Controller
 {
@@ -37,14 +38,14 @@ class InventoryController extends Controller
             'selling_price' => 'required|numeric|min:0',
             'quantity_in_stock' => 'required|integer|min:0',
             'reorder_level' => 'required|integer|min:0',
-            'barcode' => 'nullable|string|max:255',
+            'barcode' => 'nullable|string|max:255|unique:products,barcode',
         ]);
 
         $product = Product::create($request->all());
 
         // Generate barcode if not provided
         if (!$request->filled('barcode')) {
-            $product->barcode = 'BAR' . str_pad($product->id, 10, '0', STR_PAD_LEFT);
+            $product->barcode = 'P' . str_pad($product->id, 11, '0', STR_PAD_LEFT);
             $product->save();
         }
 
@@ -68,7 +69,7 @@ class InventoryController extends Controller
             'selling_price' => 'required|numeric|min:0',
             'quantity_in_stock' => 'required|integer|min:0',
             'reorder_level' => 'required|integer|min:0',
-            'barcode' => 'nullable|string|max:255',
+            'barcode' => 'nullable|string|max:255|unique:products,barcode,' . $product->id,
         ]);
 
         $product->update($request->all());
@@ -82,5 +83,13 @@ class InventoryController extends Controller
         $product->delete();
         return redirect()->route('admin.inventory.index')
             ->with('success', 'Product deleted successfully.');
+    }
+
+    // Generate barcode image for a product
+    public function barcode(Product $product)
+    {
+        $generator = new BarcodeGeneratorPNG();
+        $barcode = $generator->getBarcode($product->barcode, $generator::TYPE_CODE_128);
+        return response($barcode)->header('Content-Type', 'image/png');
     }
 }
