@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
@@ -33,6 +34,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:manag'])->group(function () {
     Route::get('/manager/dashboard', [ManagerController::class, 'dashboard']);
+});
+
+Route::middleware(['auth', 'role:cash'])->group(function () {
+    Route::get('/cashier/sales/create', [CashierController::class, 'create'])->name('cashier.sales.create');
+    Route::post('/cashier/sales', [CashierController::class, 'store'])->name('cashier.sales.store');
 });
 
 require __DIR__.'/auth.php';
