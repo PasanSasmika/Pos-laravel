@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InventoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,11 +20,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function(){
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('admin.inventory.index');
+    Route::get('/inventory/create', [InventoryController::class, 'create'])->name('admin.inventory.create');
+    Route::post('/inventory', [InventoryController::class, 'store'])->name('admin.inventory.store');
+    Route::get('/inventory/{product}/edit', [InventoryController::class, 'edit'])->name('admin.inventory.edit');
+    Route::put('/inventory/{product}', [InventoryController::class, 'update'])->name('admin.inventory.update');
+    Route::delete('/inventory/{product}', [InventoryController::class, 'destroy'])->name('admin.inventory.destroy');
 });
 
-Route::middleware(['auth', 'role:manag'])->group(function(){
+Route::middleware(['auth', 'role:manag'])->group(function () {
     Route::get('/manager/dashboard', [ManagerController::class, 'dashboard']);
 });
+
 require __DIR__.'/auth.php';
