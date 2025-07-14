@@ -43,7 +43,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:manag'])->group(function () {
-    Route::get('/manager/dashboard', [ManagerController::class, 'dashboard']);
+    Route::get('/manager/dashboard', [ManagerController::class, 'dashboard'])->name('manager.dashboard');
+    Route::get('/manager/reports/daily', [ManagerController::class, 'dailySales'])->name('manager.reports.daily');
+    Route::get('/manager/reports/weekly', [ManagerController::class, 'weeklySales'])->name('manager.reports.weekly');
+    Route::get('/manager/reports/monthly', [ManagerController::class, 'monthlySales'])->name('manager.reports.monthly');
+    Route::get('/manager/reports/best-selling', [ManagerController::class, 'bestSellingProducts'])->name('manager.reports.best_selling');
+    Route::get('/manager/reports/low-selling', [ManagerController::class, 'lowSellingProducts'])->name('manager.reports.low_selling');
+    Route::get('/manager/reports/revenue-profit', [ManagerController::class, 'revenueProfit'])->name('manager.reports.revenue_profit');
 });
 
 Route::middleware(['auth', 'role:cash'])->group(function () {
