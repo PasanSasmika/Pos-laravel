@@ -37,6 +37,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/reports/best-selling', [AdminController::class, 'bestSellingProducts'])->name('admin.reports.best_selling');
     Route::get('/admin/reports/low-selling', [AdminController::class, 'lowSellingProducts'])->name('admin.reports.low_selling');
     Route::get('/admin/reports/revenue-profit', [AdminController::class, 'revenueProfit'])->name('admin.reports.revenue_profit');
+    Route::get('/admin/reports/summary', [AdminController::class, 'salesSummary'])->name('admin.reports.summary');
 
     Route::get('/admin/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
     Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
@@ -50,6 +51,7 @@ Route::middleware(['auth', 'role:manag'])->group(function () {
     Route::get('/manager/reports/best-selling', [ManagerController::class, 'bestSellingProducts'])->name('manager.reports.best_selling');
     Route::get('/manager/reports/low-selling', [ManagerController::class, 'lowSellingProducts'])->name('manager.reports.low_selling');
     Route::get('/manager/reports/revenue-profit', [ManagerController::class, 'revenueProfit'])->name('manager.reports.revenue_profit');
+    Route::get('/manager/reports/summary', [ManagerController::class, 'salesSummary'])->name('manager.reports.summary');
 });
 
 Route::middleware(['auth', 'role:cash'])->group(function () {
