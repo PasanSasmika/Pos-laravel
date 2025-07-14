@@ -37,6 +37,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/reports/best-selling', [AdminController::class, 'bestSellingProducts'])->name('admin.reports.best_selling');
     Route::get('/admin/reports/low-selling', [AdminController::class, 'lowSellingProducts'])->name('admin.reports.low_selling');
     Route::get('/admin/reports/revenue-profit', [AdminController::class, 'revenueProfit'])->name('admin.reports.revenue_profit');
+
+    Route::get('/admin/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
+    Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
 });
 
 Route::middleware(['auth', 'role:manag'])->group(function () {
