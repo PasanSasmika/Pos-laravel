@@ -14,6 +14,8 @@ class CreateSalesTable extends Migration
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('quantity');
             $table->decimal('selling_price', 8, 2);
+            $table->decimal('discount', 8, 2)->default(0);
+            $table->decimal('tax', 8, 2)->default(0);
             $table->decimal('total_amount', 8, 2);
             $table->date('sale_date');
             $table->string('payment_method');

@@ -46,6 +46,8 @@ Route::middleware(['auth', 'role:manag'])->group(function () {
 Route::middleware(['auth', 'role:cash'])->group(function () {
     Route::get('/cashier/sales/create', [CashierController::class, 'create'])->name('cashier.sales.create');
     Route::post('/cashier/sales', [CashierController::class, 'store'])->name('cashier.sales.store');
+    Route::get('/cashier/receipt/{sale_id}/print', [CashierController::class, 'printReceipt'])->name('cashier.receipt.print');
+    Route::get('/cashier/daily/closing', [CashierController::class, 'dailyClosingReport'])->name('cashier.daily.closing');
 });
 
 require __DIR__.'/auth.php';
