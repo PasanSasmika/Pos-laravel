@@ -30,6 +30,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/inventory/{product}', [InventoryController::class, 'update'])->name('admin.inventory.update');
     Route::delete('/inventory/{product}', [InventoryController::class, 'destroy'])->name('admin.inventory.destroy');
     Route::get('/inventory/{product}/barcode', [InventoryController::class, 'barcode'])->name('admin.inventory.barcode');
+
+    Route::get('/admin/reports/daily', [AdminController::class, 'dailySales'])->name('admin.reports.daily');
+    Route::get('/admin/reports/weekly', [AdminController::class, 'weeklySales'])->name('admin.reports.weekly');
+    Route::get('/admin/reports/monthly', [AdminController::class, 'monthlySales'])->name('admin.reports.monthly');
+    Route::get('/admin/reports/best-selling', [AdminController::class, 'bestSellingProducts'])->name('admin.reports.best_selling');
+    Route::get('/admin/reports/low-selling', [AdminController::class, 'lowSellingProducts'])->name('admin.reports.low_selling');
+    Route::get('/admin/reports/revenue-profit', [AdminController::class, 'revenueProfit'])->name('admin.reports.revenue_profit');
 });
 
 Route::middleware(['auth', 'role:manag'])->group(function () {

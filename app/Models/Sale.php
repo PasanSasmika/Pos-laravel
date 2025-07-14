@@ -15,4 +15,10 @@ class Sale extends Model
         'sale_date',
         'payment_method',
     ];
+
+    public function product()
+{
+    return $this->belongsTo(Product::class);
 }
+}
+
