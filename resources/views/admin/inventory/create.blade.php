@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form action="{{ route('admin.inventory.store') }}" method="POST">
+                    <form action="{{ route('admin.inventory.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-4">
                             <label for="name" class="block text-sm font-medium">Product Name</label>
@@ -45,6 +45,11 @@
                             <label for="barcode" class="block text-sm font-medium">Barcode (Optional)</label>
                             <input type="text" name="barcode" id="barcode" class="mt-1 block w-full border-gray-300 rounded-md">
                             @error('barcode') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="image" class="block text-sm font-medium">Product Image</label>
+                            <input type="file" name="image" id="image" class="mt-1 block w-full border-gray-300 rounded-md">
+                            @error('image') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add Product</button>
                     </form>

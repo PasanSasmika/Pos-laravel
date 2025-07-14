@@ -39,9 +39,18 @@ class InventoryController extends Controller
             'quantity_in_stock' => 'required|integer|min:0',
             'reorder_level' => 'required|integer|min:0',
             'barcode' => 'nullable|string|max:255|unique:products,barcode',
+            'image' => 'nullable|image|max:2048', // Validate image upload (max 2MB)
         ]);
 
-        $product = Product::create($request->all());
+        $data = $request->all();
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        $product = Product::create($data);
 
         // Generate barcode if not provided
         if (!$request->filled('barcode')) {
@@ -70,9 +79,22 @@ class InventoryController extends Controller
             'quantity_in_stock' => 'required|integer|min:0',
             'reorder_level' => 'required|integer|min:0',
             'barcode' => 'nullable|string|max:255|unique:products,barcode,' . $product->id,
+            'image' => 'nullable|image|max:2048', // Validate image upload (max 2MB)
         ]);
 
-        $product->update($request->all());
+        $data = $request->all();
+
+        // Handle image upload or update
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($product->image) {
+                \Storage::disk('public')->delete($product->image);
+            }
+            $imagePath = $request->file('image')->store('products', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        $product->update($data);
         return redirect()->route('admin.inventory.index')
             ->with('success', 'Product updated successfully.');
     }
@@ -80,6 +102,10 @@ class InventoryController extends Controller
     // Delete a product
     public function destroy(Product $product): RedirectResponse
     {
+        // Delete the image if it exists
+        if ($product->image) {
+            \Storage::disk('public')->delete($product->image);
+        }
         $product->delete();
         return redirect()->route('admin.inventory.index')
             ->with('success', 'Product deleted successfully.');

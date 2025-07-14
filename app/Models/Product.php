@@ -14,5 +14,6 @@ class Product extends Model
         'quantity_in_stock',
         'reorder_level',
         'barcode',
+        'image',
     ];
 }
