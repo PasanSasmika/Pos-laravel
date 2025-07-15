@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Sale;
 use App\Models\User;
 use DB;
@@ -10,8 +11,10 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function dashboard(){
-        return view('admin.dashboard');
+   public function dashboard()
+    {
+        $lowStockProducts = Product::where('quantity_in_stock', '<', 5)->get();
+        return view('admin.dashboard', compact('lowStockProducts'));
     }
 
     public function createUser()
