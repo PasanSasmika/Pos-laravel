@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/inventory', [InventoryController::class, 'index'])->name('admin.inventory.index');
     Route::get('/inventory/create', [InventoryController::class, 'create'])->name('admin.inventory.create');
     Route::post('/inventory', [InventoryController::class, 'store'])->name('admin.inventory.store');
